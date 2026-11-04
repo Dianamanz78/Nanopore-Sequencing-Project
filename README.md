@@ -2,4 +2,11 @@
 
 ## Research Question
 ***
-Can classifying why a read is put into the unknown category during adaptive sampling reduce the time needed to produce these long reads compared to normal adaptive sampling method with the additional unknown category method?
+Can predicting reads resolve reduce the time needed to produce long reads compared to normal adaptive sampling method with the additional unknown category method?
+
+## Project Format
+
+The project will implement two pipelines:
+- Pipeline #1 will use adaptive sampling(accept/reject decisions) with the addition unknown category using the Readfish package. The Readfish package will repeat unknown reads in the next chunk of data (with the idea that the mapper improves with each new chunk) until the read reaches a decision (accept/reject).
+- Pipeline #2 will use the same decision categories along with the Readfish package, but after a read is categorized as unknown, we will predict how many more chunks it will need to resolve (or to get a decision of accept or reject)
+
