@@ -17,4 +17,13 @@ Benchmark Evaluation:
 
 ## Pipeline #1
 
+This pipeline uses 
+
+```mermaid
+flowchart TD
+    A[Start] --> B{Is it working?}
+    B -- Yes --> C[Great! Celebrate]
+    B -- No --> D[Check the logs]
+    D --> B
+```
 
