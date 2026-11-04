@@ -21,9 +21,23 @@ This pipeline uses
 
 ```mermaid
 flowchart TD
-    A[Start] --> B{Is it working?}
-    B -- Yes --> C[Great! Celebrate]
-    B -- No --> D[Check the logs]
-    D --> B
+    subgraph S1["Stage 1: Offline"]
+        A[Squigulator<br/>simulated signal] --> B[Dorado<br/>basecalling]
+        A --> T[truth.paf<br/>answer key]
+        B --> C[Replay script<br/>chunk and map with minimap2]
+        C --> D{Rule table}
+        D -->|accept| E[Keep]
+        D -->|reject| F[Eject]
+        D -->|unknown| G[Retry next chunk]
+        G --> C
+    end
+    subgraph S2["Stage 2: Live"]
+        H[Icarust<br/>simulated sequencer] --> I[readfish]
+        I --> J[Dorado + minimap2]
+        J --> K{Rule table}
+    end
+    E --> Z[Score against truth.paf]
+    F --> Z
+    T --> Z
 ```
 
