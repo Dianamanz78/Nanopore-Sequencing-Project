@@ -1,7 +1,6 @@
 # Nanopore-Sequencing-Project
 
 ## Research Question
-***
 Does predicting whether unknown reads will resolve reduce the time needed to produce long reads compared to normal adaptive sampling method with the additional unknown category method?
 
 ## Project Format
