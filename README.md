@@ -17,7 +17,7 @@ Benchmark Evaluation:
 
 ## Pipeline #1
 
-This pipeline uses 
+This pipeline uses the following tools: Squigulator, Minimap2, Icarust, Dorado, and Readfish. Below is the framework of the pipeline:
 
 ```mermaid
 flowchart TD
