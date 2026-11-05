@@ -41,3 +41,9 @@ flowchart TD
     T --> Z
 ```
 
+This pipeline uses the conda env named nanopore:
+
+```
+conda activate nanopore
+```
+
