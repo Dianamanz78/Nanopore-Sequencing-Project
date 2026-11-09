@@ -65,7 +65,7 @@ DORADO=<path>
 
 The first step to the pipeline is creating the raw signal data file through squigulator. The simulator expects the device type, the reference genome file, the output file, and the number of reads. 
 
-*The testing portion of the pipeline will use the E. coli genome and since the device has to match Dorado, we will use r10.4.1. In the testing stage, only 20 reads will be used. The file truth.paf will be used to check whether an accepted read was on target since it holds the exact position of where the reads go. 
+*The testing portion of the pipeline will use the E. coli genome and since the device has to match Dorado, we will use r10.4.1. In the testing stage, only 20 reads will be used. The file truth.sam will be used to check whether an accepted read was on target since it holds the exact position of where the reads go. 
 
 Types of possible devices:
 - dna-r9-min: genomic DNA on MinION R9.4.1 flowcells
@@ -86,6 +86,19 @@ Ex:
 squigulator -x dna-r10-prom --ont-friendly yes genomes/GCF_000005845.2_ASM584v2_genomic.fna -o reads.blow5 -n 20 -c truth.paf -q truth.sam
 ```
 
+---
+Building the answer key:
+```
+samtools fastq truth.sam 2>/dev/null > true_reads.fastq
+```
+```
+minimap2 -ax map-ont genomes/ecoli.fna true_reads.fastq > truth_aligned.sam
+```
+```
+samtools view -F 260 truth_aligned.sam 2>/dev/null | head -n 2 | cut -f1-6
+```
+
+---
 Dorado only reads POD5 files, so you need to convert your output to POD5.
 ```
 blue-crab s2p reads.blow5 -o reads.pod5
@@ -121,8 +134,20 @@ samtools view -c -F 260 mapped.sam
 ```
 
 check results:
+
+Create a script file called compare.sh
 ```
-samtools view -F 260 mapped.sam | cut -f1,4 | LC_ALL=C sort > mapped_pos.txt
-cut -f1,8 truth.paf | LC_ALL=C sort > truth_pos.txt
-LC_ALL=C join -t $'\t' mapped_pos.txt truth_pos.txt | awk -F'\t' '{d=$2-$3; if(d<0)d=-d; print $1, $2, $3, "diff="d}'
+nano compare.sh
+```
+
+This file will check whether the reads from the pipeline match the positions from the answer key. It wwill output how apart the reads are from its correct position in the genome.
+
+```
+#!/bin/bash 
+
+samtools view -F 260 mapped.sam 2>/dev/null | cut -f1,4 | LC_ALL=C sort > mapped_pos.txt 
+
+samtools view -F 260 truth_aligned.sam 2>/dev/null | cut -f1,4 | LC_ALL=C sort > truth_pos.txt 
+
+LC_ALL=C join -t $'\t' mapped_pos.txt truth_pos.txt | awk -F'\t' '{d=$2-$3; if(d<0)d=-d; print $1, $2, $3, "diff="d}' 
 ```
