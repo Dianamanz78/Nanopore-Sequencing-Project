@@ -43,7 +43,7 @@ flowchart TD
 
 ### Setting up the environment:
 ---
-This pipeline uses the conda env named nanopore which contains the squigulator and minimap2 packages:
+This pipeline uses the conda env named nanopore which contains the squigulator and minimap2 packages and samtools:
 
 ```
 conda activate nanopore
@@ -77,7 +77,7 @@ Types of possible devices:
 - rna004-prom: direct RNA on promethION RNA004 flowcells
 
 ```
-squigulator -x [OPTIONS] ref_genome.fa -o out_signal.blow5 -n NUM_READS -c truth.paf
+squigulator -x [OPTIONS] ref_genome.fa -o reads.blow5 -n NUM_READS -c truth.paf
 ```
 
 Dorado only reads POD5 files, so you need to convert your output to POD5.
@@ -85,23 +85,32 @@ Dorado only reads POD5 files, so you need to convert your output to POD5.
 blue-crab s2p reads.blow5 -o reads.pod5
 ```
 
-Basecall:
+Basecaller:
 
 The Dorado basecaller will take that POD5 file as input and fetch the fast model. 
 ```
 $DORADO basecaller fast reads.pod5 > reads.bam
+samtools view -c reads.bam
 ```
 
+Fastq
+
 ```
-conda install samtools mappy
 samtools fastq reads.bam > reads.fastq
 head -n 2 reads.fastq
 head -n 2 truth.paf
 ```
 
-sanity check:
+mapper:
 
 ```
-samtools fastq reads.bam | minimap2 -ax map-ont genomes/ecoli.fna - > mapped.sam
-samtools view mapped.sam | cut -f1,3,4 | head
+minimap2 -ax map-ont genomes/ecoli.fna reads.fastq > mapped.sam
+samtools view -c -F 260 mapped.sam
+```
+
+check results:
+```
+samtools view -F 260 mapped.sam | cut -f1,4 | LC_ALL=C sort > mapped_pos.txt
+cut -f1,8 truth.paf | LC_ALL=C sort > truth_pos.txt
+LC_ALL=C join -t $'\t' mapped_pos.txt truth_pos.txt | awk -F'\t' '{d=$2-$3; if(d<0)d=-d; print $1, $2, $3, "diff="d}'
 ```
