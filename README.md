@@ -23,7 +23,7 @@ This pipeline uses the following tools: Squigulator, Minimap2, Icarust, Dorado, 
 flowchart TD
     subgraph S1["Stage 1: Offline"]
         A[Squigulator<br/>simulated signal] --> B[Dorado<br/>basecalling]
-        A --> T[truth.paf<br/>answer key]
+        A --> T[truth.sam<br/>answer key]
         B --> C[Replay script<br/>chunk and map with minimap2]
         C --> D{Rule table}
         D -->|accept| E[Keep]
