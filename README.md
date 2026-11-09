@@ -42,7 +42,7 @@ flowchart TD
 ```
 
 ### Setting up the environment:
-
+---
 This pipeline uses the conda env named nanopore which contains the squigulator and minimap2 packages:
 
 ```
@@ -60,5 +60,5 @@ DORADO=<path>
 ```
 
 ### Starting a session
-
+---
 
