@@ -83,7 +83,7 @@ squigulator -x [OPTIONS] ref_genome.fa -o reads.blow5 -n NUM_READS -c truth.paf
 
 Ex:
 ```
-squigulator -x dna-r10-prom --ont-friendly yes genomes/GCF_000005845.2_ASM584v2_genomic.fna -o reads.blow5 -n 20 -c truth.paf 
+squigulator -x dna-r10-prom --ont-friendly yes genomes/GCF_000005845.2_ASM584v2_genomic.fna -o reads.blow5 -n 20 -c truth.paf -q truth.sam
 ```
 
 Dorado only reads POD5 files, so you need to convert your output to POD5.
