@@ -63,6 +63,7 @@ DORADO=<path>
 ---
 
 The first step to the pipeline is creating the raw signal data file through squigulator. The simulator expects the device type, the reference genome file, the output file, and the number of reads. 
+
 *The testing portion of the pipeline will use the E. coli genome and since the device has to match Dorado, we will use r10.4.1. Also, Dorado only reads POD5 files, so you need to convert your output to POD5. 
 
 Types of possible devices:
