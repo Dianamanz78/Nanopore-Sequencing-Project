@@ -36,7 +36,7 @@ flowchart TD
         I --> J[Dorado + minimap2]
         J --> K{Rule table}
     end
-    E --> Z[Score against truth.paf]
+    E --> Z[Score against truth.sam]
     F --> Z
     T --> Z
 ```
