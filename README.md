@@ -41,9 +41,11 @@ flowchart TD
     T --> Z
 ```
 
-This pipeline uses the conda env named nanopore:
+This pipeline uses the conda env named nanopore which contains the squigulator and minimap2 packages:
 
 ```
 conda activate nanopore
 ```
+
+
 
