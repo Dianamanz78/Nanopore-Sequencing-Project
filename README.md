@@ -64,7 +64,7 @@ DORADO=<path>
 
 The first step to the pipeline is creating the raw signal data file through squigulator. The simulator expects the device type, the reference genome file, the output file, and the number of reads. 
 
-*The testing portion of the pipeline will use the E. coli genome and since the device has to match Dorado, we will use r10.4.1. Also, Dorado only reads POD5 files, so you need to convert your output to POD5. 
+*The testing portion of the pipeline will use the E. coli genome and since the device has to match Dorado, we will use r10.4.1. In the testing stage, only 20 reads will be used. The file truth.paf will be used to check whether an accepted read was on target since it holds the exact position of where the reads go. 
 
 Types of possible devices:
 - dna-r9-min: genomic DNA on MinION R9.4.1 flowcells
@@ -77,7 +77,13 @@ Types of possible devices:
 - rna004-prom: direct RNA on promethION RNA004 flowcells
 
 ```
-squigulator -x [OPTIONS] ref_genome.fa -o out_signal.blow5 -n NUM_READS
+squigulator -x [OPTIONS] ref_genome.fa -o out_signal.blow5 -n NUM_READS -c truth.paf
 ```
+
+Dorado only reads POD5 files, so you need to convert your output to POD5.
+```
+blue-crab s2p reads.blow5 -o reads.pod5
+```
+
 
 
