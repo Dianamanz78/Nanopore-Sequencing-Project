@@ -86,6 +86,11 @@ Dorado only reads POD5 files, so you need to convert your output to POD5.
 blue-crab s2p reads.blow5 -o reads.pod5
 ```
 
+check if the file is correct
+```
+pod5 inspect reads reads.pod5
+```
+
 Basecaller:
 
 The Dorado basecaller will take that POD5 file as input and fetch the fast model. 
