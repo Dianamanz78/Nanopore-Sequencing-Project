@@ -85,5 +85,23 @@ Dorado only reads POD5 files, so you need to convert your output to POD5.
 blue-crab s2p reads.blow5 -o reads.pod5
 ```
 
+Basecall:
 
+The Dorado basecaller will take that POD5 file as input and fetch the fast model. 
+```
+$DORADO basecaller fast reads.pod5 > reads.bam
+```
 
+```
+conda install samtools mappy
+samtools fastq reads.bam > reads.fastq
+head -n 2 reads.fastq
+head -n 2 truth.paf
+```
+
+sanity check:
+
+```
+samtools fastq reads.bam | minimap2 -ax map-ont genomes/ecoli.fna - > mapped.sam
+samtools view mapped.sam | cut -f1,3,4 | head
+```
