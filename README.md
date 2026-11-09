@@ -89,6 +89,7 @@ blue-crab s2p reads.blow5 -o reads.pod5
 check if the file is correct
 ```
 pod5 inspect reads reads.pod5
+pod5 inspect summary reads.pod5
 ```
 
 Basecaller:
