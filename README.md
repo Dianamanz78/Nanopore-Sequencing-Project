@@ -56,6 +56,7 @@ cd ~/nanopore_project
 
 create a shell variable for the Dorado package
 ```
+find ~ -type f -name dorado 2>/dev/null
 DORADO=<path>
 ```
 
