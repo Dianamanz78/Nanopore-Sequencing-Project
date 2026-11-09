@@ -47,5 +47,15 @@ This pipeline uses the conda env named nanopore which contains the squigulator a
 conda activate nanopore
 ```
 
+go into the project directory:
+```
+cd ~/nanopore_project
+```
+
+create a shell variable for the Dorado package
+```
+DORADO=<path>
+```
+
 
 
